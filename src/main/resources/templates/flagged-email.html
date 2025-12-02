@@ -1,0 +1,57 @@
+<body style="margin:0; padding:0; background-color:#edf2f7;">
+<center>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#edf2f7; padding:20px;">
+        <tr>
+            <td align="center">
+
+                <!-- Main container -->
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border:1px solid #e2e8f0;">
+                    <tr>
+                        <td align="center" style="background-color:#3182ce; color:#ffffff; padding:20px; font-family:Arial, sans-serif; font-weight:bold; font-size:24px;">
+                            🔒 Compliance Alert
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:20px; font-family:Arial, sans-serif; font-size:16px; color:#2d3748;">
+                            <p style="margin-bottom:15px;">⚠️ A message has been flagged in your compliance system.</p>
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td style="font-weight:bold; width:150px;">Severity:</td>
+                                    <td>{{severityLabel}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">Message ID:</td>
+                                    <td>{{messageId}}</td>
+                                </tr>
+                            </table>
+                            <div style="text-align:center; margin:30px 0;">
+                                <!-- Bulletproof button for Outlook -->
+                                <!--[if mso]>
+                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{reviewUrl}}"
+                                             style="height:40px; v-text-anchor:middle; width:200px;" arcsize="8%" stroke="f" fillcolor="#3182ce">
+                                    <w:anchorlock/>
+                                    <center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px;">
+                                        Review Message
+                                    </center>
+                                </v:roundrect>
+                                <![endif]-->
+                                <a href="{{reviewUrl}}"
+                                   style="display:inline-block; background-color:#3182ce; color:#ffffff; padding:12px 24px; text-decoration:none; font-family:Arial, sans-serif; font-size:16px; border-radius:4px;">
+                                    Review Message
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#a0aec0; color:#4a5568; padding:15px; font-family:Arial, sans-serif; font-size:12px; text-align:center;">
+                            <p style="margin:0;">Please review within 24 hours</p>
+                            <p style="margin:0;">Compliance Team</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</center>
+</body>

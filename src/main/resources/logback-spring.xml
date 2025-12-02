@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Simple path outside project root -->
+    <property name="SERVICE_NAME" value="${SERVICE_NAME:-compliancePolicyEngine}"/>
+    <property name="LOG_PATH" value="${LOG_PATH:-../logs}"/>
+
+    <!-- Patterns -->
+    <property name="LOG_PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %replace(%msg){'\n',' '}%n"/>
+    <property name="LOG_PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [${SERVICE_NAME}] %logger{36} - %replace(%msg){'\n',' '}%n"/>
+    <property name="LOG_PATTERN_FILE_WITH_ID" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %X{stableMessageId} %-5level [%thread] [${SERVICE_NAME}] %logger{36} - %replace(%msg){'\n',' '}%n"/>
+
+
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN_CONSOLE}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender - All Logs -->
+    <appender name="ALL_LOGS_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/${SERVICE_NAME}-all.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${LOG_PATTERN_FILE}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender - Error Logs -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/${SERVICE_NAME}-error.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${LOG_PATTERN_FILE}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <!-- File Appender - ID Logs (only logs with stableMessageId) -->
+    <appender name="ID_LOGS_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/${SERVICE_NAME}-id.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${LOG_PATTERN_FILE_WITH_ID}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <expression>return mdc != null &amp;&amp; mdc.get("stableMessageId") != null &amp;&amp; !mdc.get("stableMessageId").isEmpty();</expression>
+            </evaluator>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ALL_LOGS_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+        <appender-ref ref="ID_LOGS_FILE"/>
+    </root>
+
+</configuration>
